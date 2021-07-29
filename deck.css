@@ -1,0 +1,84 @@
+.content {
+    width: inherit;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #474787;
+    perspective: 500px;
+}
+.title {
+    font-size: 35px;
+    font-weight: bold;
+    height: 40px;
+    color: #f7f1e3;
+}
+.card {
+    background-color: lavender;
+    width: 300px;
+    height: 60%;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.card div {
+    /* text-align: justify; */
+    font-size: 30px;
+    font-weight: 600;
+    backface-visibility: hidden;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    user-select: none;
+}
+.card .back {
+    transform: rotateY(180deg);
+    background-color: #ffb142;
+    width: 100%;
+}
+.card .back-mask {
+    width: 100%;
+    height: 100%;
+    background-color: #ffb142;
+}
+.card-flip {
+    transform: rotateY(180deg);
+    transition: transform 0.5s;
+}
+.g-button {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.g-button button {
+    height: 80px;
+    width: 120px;
+    border-radius: 5px;
+    border: 0.5px #ccc;
+    font-weight: 600;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.btn-green {
+    background-color: #33d9b2;
+}
+.btn-red {
+    background-color: #ff5252;
+}
+.btn-flip {
+    height: 60px !important;
+    width: 60px !important;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-image: url(./flip.png);
+    background-position: center;
+    background-size: cover;
+}
