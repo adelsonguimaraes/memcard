@@ -76,7 +76,7 @@ class indexeddb {
     getAll (store) {
         this.CON = this.getStore(store).getAll();
         this.CON.onsuccess = e => {
-            return e;
+            return e.target.result;
         };
         this.CON.onerror = e => {
             console.error("Ocorreu um erro no GetAll", error);
