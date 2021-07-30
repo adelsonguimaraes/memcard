@@ -1,4 +1,4 @@
-class app {
+class deck {
     constructor () {
         // toda vez que instancia esse metodo é chamado
         this.CONTENT = document.querySelector('div.content');
@@ -61,4 +61,4 @@ class app {
         });
     }
 }
-const APP = new app();
+const DECK = new deck();

@@ -1,0 +1,43 @@
+.form-deck {
+    background-color: black;
+    width: 90%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.form-deck .title {
+    color: #fff;
+    font-size: 53px;
+    height: 150px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+}
+.form-deck input {
+    width: 280px;
+    padding: 20px;
+    font-size: 20px;
+}
+.form-deck .btn {
+    padding: 30px;
+}
+.form-deck button {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    padding: 10px;
+    border: 0.05px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.form-deck button:hover {
+    background-color: rgb(179, 179, 179);
+}
+.form-deck i {
+    font-size: 6rem;
+}

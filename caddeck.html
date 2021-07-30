@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casdastro Deck</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./caddek.css">
+    <link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="menu"></div>
+
+    <div class="box">
+        <div class="form-deck">
+            <div class="title">
+                Qual o nome do deck ?
+            </div>
+            <div class="input">
+                <input type="text" placeholder="Insira o nome do deck..">
+            </div>
+            <div class="btn">
+                <button onclick="CADDECK.cadastrar()">
+                    <i class="fa fa-check-circle-o"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./controllers/menu.js"></script>
+    <script src="./controllers/indexedb.js"></script>
+    <script src="./controllers/caddeck.js"></script>
+</body>
+</html>
