@@ -50,23 +50,33 @@ class indexeddb {
     }
 
     add (store, data) {
-        this.CON = this.getStore(store).add(data);
-        this.CON.onsuccess = e => {
-            console.log("Adicionado o item com sucesso", data);
-        };
-        this.CON.onerror = e => {
-            console.error("Ocorreu um erro ao Adicionar", error);
-        };
+        return new Promise( async (resolve, reject) => {
+            const transaction = await this.getStore(store);
+            const request = await transaction.add(data);
+
+            request.onsuccess = e => {
+                resolve(e.target.result);
+            };
+            request.onerror = e => {
+                console.error("Ocorreu um erro ao Adicionar", e.target.error);
+                reject(e.target.error);
+            };
+        });
     }
     
     update (store, data) {
-        this.CON = this.getStore(store).put(data);
-        this.CON.onsuccess = e => {
-            console.log("Atualizado o item com sucesso", data);
-        };
-        this.CON.onerror = e => {
-            console.error("Ocorreu um erro ao Atualizar", error);
-        };
+        return new Promise( async (resolve, reject) => {
+            const transaction = await this.getStore(store);
+            const request = await transaction.put(data);
+            request.onsuccess = e => {
+                resolve(e.target.result);
+            };
+            request.onerror = e => {
+                console.error("Ocorreu um erro ao Atualizar", error);
+                reject(e.target.error);
+            };
+
+        });
     }
 
     get (store, id) {

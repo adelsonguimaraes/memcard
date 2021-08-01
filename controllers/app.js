@@ -5,17 +5,9 @@ class app {
         this.get();
     }
 
-    get () {
-        setTimeout(() => {
-            const request = INDEXEDDB.getAll('deck');
-            request.onsuccess = e => {
-                this.LISTA = e.target.result;
-                this.mount();
-            }
-            request.onerror = e => {
-                console.error(e);
-            }
-        }, 500);
+    async get () {
+        this.LISTA = await INDEXEDDB.getAll('deck');
+        this.mount();
     }
 
     mount () {

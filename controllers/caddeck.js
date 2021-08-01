@@ -2,32 +2,55 @@ class caddeck {
     constructor () {
         this.INPUT = document.querySelector('input');
         this.OBJ = null;
+        this.reset();
         this.getHash();
     }
 
-    async getHash() {
-        let id = window.location.hash.replace('#', '');
-        if (id!==null) {
-            this.OBJ = await INDEXEDDB.get('deck', id);
-            this.INPUT.value = this.OBJ.name;
-        }
+    reset () {
+        this.OBJ = {
+            id: null,
+            name: null,
+            data_cadastro: null
+        };
     }
 
-    cadastrar () {
-        if (this.INPUT.value==='') alert("Prrencha um nome para cadastrar o deck!");
-        
-        const dt = new Date();
-        const ano = dt.getFullYear();
-        const mes = (dt.getMonth()+1<10) ? '0'+(dt.getMonth()+1) : dt.getDate()+1;
-        const dia = (dt.getDate()<10) ? '0'+(dt.getDate()) : dt.getDate();
+    async getHash() {
+        // --- pegando hash da url
+        let id = window.location.hash.replace('#', '');
+        // --- se o hash não for um numero válido
+        if (isNaN(parseInt(id))) return false;
 
-        // cadastrando o deck no indexedDB
-        INDEXEDDB.add('deck', {
-            id: dt.getTime(),
-            name: this.INPUT.value,
-            nivel: 1,
-            data_cadastro: `${ano}-${mes}-${dia}`
-        });
+        // getando por id
+        this.OBJ = await INDEXEDDB.get('deck', id);
+        // se for undefined
+        if (this.OBJ===undefined) return false;
+        
+        this.INPUT.value = this.OBJ.name;
+    }
+
+    async cadastrar () {
+        if (this.INPUT.value==='') return alert("Prencha um nome para salvar o deck!");
+        
+        if (this.OBJ.id===null) {
+
+            const dt = new Date();
+            const ano = dt.getFullYear();
+            const mes = (dt.getMonth()+1<10) ? '0'+(dt.getMonth()+1) : dt.getDate()+1;
+            const dia = (dt.getDate()<10) ? '0'+(dt.getDate()) : dt.getDate();
+
+            this.OBJ.id = dt.getTime();
+            this.OBJ.name = this.INPUT.value;
+            this.OBJ.nivel = 1;
+            this.OBJ.data_cadastro = `${ano}-${mes}-${dia}`;
+
+            // cadastrando o deck no indexedDB
+            await INDEXEDDB.add('deck', this.OBJ);
+        }else{
+            
+            this.OBJ.name = this.OBJ.name = this.INPUT.value;
+            // cadastrando o deck no indexedDB
+            await INDEXEDDB.update('deck', this.OBJ);
+        }
 
         // redirecionamento
         window.location.replace('./');
