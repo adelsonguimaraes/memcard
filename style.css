@@ -90,6 +90,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    scroll-behavior: smooth;
 }
 h3 {
     text-align: center;

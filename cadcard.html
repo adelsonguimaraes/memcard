@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casdastro Deck</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./cadcard.css">
+    <link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="menu"></div>
+
+    <div class="box" id="form1">
+        <div class="form-card">
+            <div class="title">
+                Qual a frente do card ?
+            </div>
+            <div class="input">
+                <textarea name="frente" placeholder="Insira a pergunta"></textarea>
+            </div>
+            <div class="btn">
+                <a href="#form2">
+                    <img src="./img/next.png">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="box" id="form2">
+        <div class="form-card">
+            <div class="title">
+                Qual o verso do card ?
+            </div>
+            <div class="input">
+                <textarea name="verso" placeholder="Insira a resposta.."></textarea>
+            </div>
+            <div class="btn">
+                <a onclick="CADCARD.cadastrar()">
+                    <img src="./img/ok.png">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="./controllers/menu.js"></script>
+    <script src="./controllers/indexedb.js"></script>
+    <script async src="./controllers/cadcard.js"></script>
+</body>
+</html>

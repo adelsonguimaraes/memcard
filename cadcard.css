@@ -1,0 +1,51 @@
+.form-card {
+    background-color: black;
+    width: 90%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.form-card .title {
+    color: #fff;
+    font-size: 53px;
+    height: 150px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+}
+.form-card input {
+    width: 280px;
+    padding: 20px;
+    font-size: 20px;
+}
+.form-card textarea {
+    width: 280px;
+    height: 150px;
+    padding: 20px;
+    font-size: 20px;
+}
+.form-card .btn {
+    padding: 30px;
+}
+.form-card button, a {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    padding: 10px;
+    border: 0.05px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+}
+.form-card button:hover {
+    background-color: rgb(179, 179, 179);
+}
+.form-card i {
+    font-size: 6rem;
+}

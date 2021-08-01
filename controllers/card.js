@@ -1,24 +1,32 @@
-class app {
+class card {
     constructor () {
         this.EL = document.querySelector('div.box ul');
         this.LISTA = [];
-        this.get();
+        this.IDDECK = null;
+        this.getHash();
     }
 
-    async get () {
-        this.LISTA = await INDEXEDDB.getAll('deck');
+    async getHash() {
+        // --- pegando hash da url
+        const params = new URLSearchParams(window.location.search);
+        const iddeck = parseInt(params.get('iddeck'));
+        
+        // --- se o hash não for um numero válido
+        if (isNaN(iddeck)) return window.location.replace('./');
+
+        this.IDDECK = iddeck;
+
+        // getando por id
+        this.LISTA = await INDEXEDDB.getBy('card', 'iddeck', iddeck);
+        // se for undefined
+        if (this.LISTA.length<=0) return false;
+        
         this.mount();
     }
 
-    async mount () {
+    mount () {
         let string = '';
-        this.EL.innerHTML = '';
-
         for (const e of this.LISTA) {
-            
-            // consultando os cards
-            const cards = await INDEXEDDB.getBy ("card", "iddeck", e.id);
-            const total = cards.length;
 
             // lógica nível
             let nivel = '';
@@ -43,21 +51,21 @@ class app {
             }
 
             string += `
-                <li onclick="APP.opcoes(${e.id})">
+                <li onclick="CARD.opcoes(${e.id})">
                     <div class="panel">
                         <div class="panel-top">
-                            <a>${e.name}</a>
+                            <a>${e.frente.substr(0, 10)}..</a>
                             <a>
                                 ${nivel}
                             </a>
                         </div>
                         <div class="panel-bottom">
-                            <a>Cards: ${total}</a>
+                            <a>${e.verso.substr(0, 10)}..</a>
                         </div>
                     </div>
                 </li>
             `;
-        };
+        }
 
         this.EL.innerHTML = string;
     }
@@ -67,16 +75,10 @@ class app {
             if (parseInt(e.id) === parseInt(id)) {
                 const string = `
                     <li>
-                        <a href="./caddeck.html?id=${id}">EDITAR</a>
+                        <a href="./cadcard.html?iddeck=${e.iddeck}&id=${e.id}">EDITAR</a>
                     </li>
                     <li>
-                        <a href="./card.html?iddeck=${id}">CARDS</a>
-                    </li>
-                    <li>
-                        <a href="./game.html?iddeck=${id}">JOGAR</a>
-                    </li>
-                    <li>
-                        <a class="link-red" onclick="APP.deletar(${id})">DELETAR</a>
+                        <a class="link-red" onclick="deletar(${e.id})">DELETAR</a>
                     </li>
                 `;
 
@@ -85,20 +87,8 @@ class app {
         });
     }
 
-    async deletar (id) {
-        const c = confirm("Deseja remover todo o deck?");
-
-        if (c) {
-            const cards = await INDEXEDDB.getBy('card', 'iddeck', id);
-            for (const e of cards) {
-                const r = await INDEXEDDB.remove('card', e.id);
-            }
-
-            const r = await INDEXEDDB.remove ('deck', id);
-
-            this.get();
-            MODAL.close();
-        }
+    novo () {
+        window.location.replace(`./cadcard.html?iddeck=${this.IDDECK}`);
     }
 }
-const APP = new app();
+const CARD = new card();

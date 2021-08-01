@@ -108,6 +108,23 @@ class indexeddb {
         });
     }
 
+    async getBy (store, by, value) {
+        return new Promise ( async (resolve, reject) => {
+            const transaction = await this.getStore(store);
+            const index = await transaction.index(by);
+            
+            const request = await index.getAll(value);
+
+            request.onsuccess = e => {
+                resolve(e.target.result);
+            };
+            request.onerror = e => {
+                console.error("Ocorreu um erro no GetBy", e.target.error);
+                reject(e.target.error);
+            };
+        });
+    }
+
     remove (store, id) {
         return new Promise( async (resolve, reject) => {
             const transaction = await this.getStore(store);
