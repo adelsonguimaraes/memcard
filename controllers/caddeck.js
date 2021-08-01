@@ -1,6 +1,16 @@
 class caddeck {
     constructor () {
         this.INPUT = document.querySelector('input');
+        this.OBJ = null;
+        this.getHash();
+    }
+
+    async getHash() {
+        let id = window.location.hash.replace('#', '');
+        if (id!==null) {
+            this.OBJ = await INDEXEDDB.get('deck', id);
+            this.INPUT.value = this.OBJ.name;
+        }
     }
 
     cadastrar () {
@@ -18,6 +28,9 @@ class caddeck {
             nivel: 1,
             data_cadastro: `${ano}-${mes}-${dia}`
         });
+
+        // redirecionamento
+        window.location.replace('./');
     }
 }
 const CADDECK = new caddeck();

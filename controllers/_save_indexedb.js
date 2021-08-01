@@ -17,18 +17,14 @@ class indexeddb {
     }
 
     open () {
-        return new Promise((resolve, reject) => {
-            this.CON = window.indexedDB.open(this.DBNAME, this.VERSION);
-            this.CON.onsuccess = async e => {
-                this.DB = e.target.result;
-                console.log('o banco foi aberto com sucesso!', e.target.result);
-                resolve(this.DB);
-            };
-            this.CON.onerror = e => {
-                console.error('ocorreu um erro ao tentar abrir o banco de dados', e.target.errorCode);
-                reject(e.target.error);
-            };
-        });
+        this.CON = window.indexedDB.open(this.DBNAME, this.VERSION);
+        this.CON.onsuccess = async e => {
+            this.DB = await e.target.result;
+            console.log('o banco foi aberto com sucesso!', e.target.result);
+        };
+        this.CON.onerror = e => {
+            console.error('ocorreu um erro ao tentar abrir o banco de dados', e.target.errorCode);
+        };
     }
 
     createStories () {
@@ -43,10 +39,8 @@ class indexeddb {
         };
     }
     
-    async getStore (store) {
-        const DB = await this.open();
-        const r = DB.transaction([store], "readwrite").objectStore(store);
-        return r;
+    getStore (store) {
+        return this.DB.transaction([store], "readwrite").objectStore(store);
     }
 
     add (store, data) {
@@ -69,48 +63,35 @@ class indexeddb {
         };
     }
 
-    get (store, id) {
-        return new Promise( async (resolve, reject) => {
-            const transaction = await this.getStore(store);
-            const request = await transaction.get(parseInt(id));
-            
-            request.onsuccess = e => {
-                resolve(e.target.result);
-            };
-            request.onerror = e => {
-                console.error("Ocorreu um erro no Get", e.target.error);
-                reject(e.target.error);
-            };
-        });
+    async get (store, id) {
+        await this.getStore(store).get(parseInt(id));
+        this.CON.onsuccess = e => {
+            return e.target.result;
+        };
+        this.CON.onerror = e => {
+            console.error("Ocorreu um erro ao Getar", error);
+        };
     }
 
     getAll (store) {
-        return new Promise( async (resolve, reject) => {
-            const transaction = await this.getStore(store);
-            const request = transaction.getAll();
-            request.onsuccess = e => {
-                resolve(e.target.result);
-            };
-            request.onerror = e => {
-                console.error("Ocorreu um erro no GetAll", e.target.error);
-                reject(e.target.error);
-            };
-        });
+        return this.CON = this.getStore(store).getAll();
+        // this.CON.onsuccess = e => {
+        //     return e;
+        // };
+        // this.CON.onerror = e => {
+        //     console.error("Ocorreu um erro no GetAll", error);
+        // };
+        
     }
 
     remove (store, id) {
-        return new Promise( async (resolve, reject) => {
-            const transaction = await this.getStore(store);
-            const request = transaction.delete(parseInt(id));
-            
-            request.onsuccess = e => {
-                resolve(e.target.result);
-            };
-            request.onerror = e => {
-                console.error("Ocorreu um erro no GetAll", e.target.error);
-                reject(e.target.error);
-            };
-        });
+        this.CON = this.getStore(store).delete(parseInt(id));
+        this.CON.onsuccess = e => {
+            console.log('Removido com sucesso', id);
+        };
+        this.CON.onerror = e => {
+            console.error("Ocorreu um erro ao remover", error);
+        };
     }
 
     // modelos do banco de dados
