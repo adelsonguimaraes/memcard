@@ -76,6 +76,9 @@ class app {
                         <a href="./game.html?iddeck=${id}">JOGAR</a>
                     </li>
                     <li>
+                        <a onclick="APP.resetar(${id})">RESETAR</a>
+                    </li>
+                    <li>
                         <a class="link-red" onclick="APP.deletar(${id})">DELETAR</a>
                     </li>
                 `;
@@ -83,6 +86,27 @@ class app {
                 MODAL.show(string);
             }
         });
+    }
+
+    async resetar (id) {
+        const c = confirm("Deseja resetar os níveis do Deck?");
+
+        if (c) {
+            // consultandos os cards do deck
+            const cards = await INDEXEDDB.getBy('card', 'iddeck', id);
+            for (const e of cards) {
+                e.nivel = 1; // setando o nivel como 1
+                const r = await INDEXEDDB.update('card', e);
+            }
+
+            // consultando o deck na lista
+            const deck = this.LISTA.filter(e => e.id === id)[0];
+            deck.nivel = 1; // setando o nivel como 1
+            const r = await INDEXEDDB.update('deck', deck);
+
+            // atualizando a pagina
+            window.location.reload();
+        }
     }
 
     async deletar (id) {

@@ -24,6 +24,9 @@ class game {
 
         this.DECK = await INDEXEDDB.get('deck', iddeck);
 
+        // adicionando nome do DECK no titulo
+        document.querySelector('div.content div.title').innerHTML = this.DECK.name;
+
         // getando lista por id do deck e nivel do deck
         this.LISTA = await INDEXEDDB.getBy('card', ('iddeck', 'nivel'), (this.DECK.id, this.DECK.nivel));
 
@@ -39,19 +42,45 @@ class game {
     mountCard () {
         this.CARD.classList.remove('card-flip');
         this.CARD.querySelector('div.front').innerText = this.LISTA[this.INDEX].frente;
-        this.CARD.querySelector('div.back').innerText = this.LISTA[this.INDEX].verso;
+
+        // um pequeno atraso no preenchimento da resposta do card enquanto é girado
+        // ao clicar em acerto ou erro
+        setTimeout(()=>{
+            this.CARD.querySelector('div.back').innerText = this.LISTA[this.INDEX].verso;
+        }, 500);
     }
 
     flipCard () {
         this.CARD.addEventListener('click', e => {
             this.CARD.classList.add('card-flip');
             this.FLIP = true;
+            this.audioFlip();
         });
+    }
+
+    audioFlip () {
+        const audio = new Audio('./audio/page.mp3');
+        audio.volume = .3;
+        audio.play();
+    }
+
+    audioConfirm () {
+        const audio = new Audio('./audio/confirm.mp3');
+        audio.volume = .3;
+        audio.play();
+    }
+
+    audioCancel () {
+        const audio = new Audio('./audio/cancel.mp3');
+        audio.volume = .3;
+        audio.play();
     }
 
     async clickOK () {
         document.querySelector('button.btn-green').addEventListener('click', async e => {
             if (!this.FLIP) return alert('Vire a carta antes!');
+
+            this.audioConfirm();
 
             // subindo a carta de nível
             const card = this.LISTA[this.INDEX];
@@ -74,6 +103,10 @@ class game {
         document.querySelector('button.btn-red').addEventListener('click', e => {
             if (!this.FLIP) return alert('Vire a carta antes!');
 
+            this.audioCancel();
+
+            // se o nível do card foir maior que 1
+            // contamos como erro
             if (this.DECK.nivel>1) this.ERROR++;
 
             // baixando a carta de nível
