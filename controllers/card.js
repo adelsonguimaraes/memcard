@@ -19,7 +19,7 @@ class card {
         this.IDDECK = iddeck;
 
         // getando por id
-        this.LISTA = await INDEXEDDB.getBy('card', 'iddeck', iddeck);
+        this.LISTA = await INDEXEDDB.getBy('card', ('iddeck'), (iddeck));
         // se for undefined
         if (this.LISTA.length<=0) return false;
         
