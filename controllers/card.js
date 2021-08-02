@@ -8,8 +8,7 @@ class card {
 
     async get() {
         // --- pegando hash da url
-        const params = new URLSearchParams(window.location.search);
-        const iddeck = parseInt(params.get('iddeck'));
+        const iddeck = parseInt(sessionStorage.getItem('iddeck'));
 
         this.EL.innerHTML = '';
         
@@ -20,6 +19,7 @@ class card {
 
         // getando por id
         this.LISTA = await INDEXEDDB.getBy('card', ('iddeck'), (iddeck));
+
         // se for undefined
         if (this.LISTA.length<=0) return false;
         
@@ -78,7 +78,7 @@ class card {
             if (parseInt(e.id) === parseInt(id)) {
                 const string = `
                     <li>
-                        <a href="./cadcard.html?iddeck=${e.iddeck}&id=${e.id}">EDITAR</a>
+                        <a onclick="CARD.editar(${e.id}, ${e.iddeck})">EDITAR</a>
                     </li>
                     <li>
                         <a class="link-red" onclick="CARD.deletar(${e.id})">DELETAR</a>
@@ -88,6 +88,13 @@ class card {
                 MODAL.show(string);
             }
         });
+    }
+
+    editar (id, iddeck) {
+        sessionStorage.setItem('iddeck', iddeck);
+        sessionStorage.setItem('idcard', id);
+
+        window.location.replace('./cadcard.html');
     }
 
     async deletar (id) {

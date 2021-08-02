@@ -21,9 +21,8 @@ class cadcard {
 
     async getHash() {
         // --- pegando hash da url
-        const params = new URLSearchParams(window.location.search);
-        const iddeck = parseInt(params.get('iddeck'));
-        const id = parseInt(params.get('id'));
+        const iddeck = parseInt(sessionStorage.getItem('iddeck'));
+        const id = parseInt(sessionStorage.getItem('idcard'));
         
         // --- se o hash não for um numero válido
         if (isNaN(iddeck)) return window.location.replace('./');

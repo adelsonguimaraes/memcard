@@ -16,8 +16,7 @@ class game {
 
     async get() {
         // --- pegando hash da url
-        const params = new URLSearchParams(window.location.search);
-        const iddeck = parseInt(params.get('iddeck'));
+        const iddeck = parseInt(sessionStorage.getItem('iddeck'));
         
         // --- se o hash não for um numero válido
         if (isNaN(iddeck)) return window.location.replace('./');
@@ -88,19 +87,19 @@ class game {
 
     audioFlip () {
         const audio = new Audio('./audio/page.mp3');
-        audio.volume = .3;
+        audio.volume = .8;
         audio.play();
     }
 
     audioConfirm () {
         const audio = new Audio('./audio/confirm.mp3');
-        audio.volume = .3;
+        audio.volume = .8;
         audio.play();
     }
 
     audioCancel () {
         const audio = new Audio('./audio/cancel.mp3');
-        audio.volume = .3;
+        audio.volume = .8;
         audio.play();
     }
 

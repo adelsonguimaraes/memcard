@@ -15,9 +15,8 @@ class caddeck {
     }
 
     async getHash() {
-        // --- pegando hash da url
-        const params = new URLSearchParams(window.location.search);
-        const id = parseInt(params.get('id'));
+        // pegando id do deck do sessionStorage
+        const id = sessionStorage.getItem('iddeck');
         
         // --- se o hash não for um numero válido
         if (isNaN(parseInt(id))) return false;

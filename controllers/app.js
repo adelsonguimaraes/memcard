@@ -63,17 +63,20 @@ class app {
     }
 
     opcoes (id) {
+        // salvando id do deck no sessionStorage
+        sessionStorage.setItem('iddeck', id);
+
         this.LISTA.forEach(e => {
             if (parseInt(e.id) === parseInt(id)) {
                 const string = `
                     <li>
-                        <a href="./caddeck.html?id=${id}">EDITAR</a>
+                        <a href="./caddeck.html">EDITAR</a>
                     </li>
                     <li>
-                        <a href="./card.html?iddeck=${id}">CARDS</a>
+                        <a href="./card.html">CARDS</a>
                     </li>
                     <li>
-                        <a href="./game.html?iddeck=${id}">JOGAR</a>
+                        <a href="./game.html">JOGAR</a>
                     </li>
                     <li>
                         <a onclick="APP.resetar(${id})">RESETAR</a>

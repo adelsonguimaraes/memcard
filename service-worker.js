@@ -1,7 +1,10 @@
+importScripts('./sw-cache-polyfill.js');
+
 let cacheName = 'memcard-v1';
 let filesToCache = [
     './',
     './index.html',
+    './manifest.json',
     // images
     './img/icons/192x192.png',
     './img/icons/512x512.png',

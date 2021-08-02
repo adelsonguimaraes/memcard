@@ -16,15 +16,22 @@ body {
     position: fixed;
     z-index: 1;
 }
-.return a {
+.return > a {
     padding: 10px;
     display: block;
     background-color: #313179;
+    border-radius: 0;
     border-bottom-right-radius: 100%;
     font-size: 31px;
     height: 75px;
     width: 80px;
     color: #fff;
+}
+.return > a:hover {
+    outline: none;
+}
+.return > a:active {
+    outline: none;
 }
 .return i {
     transition: .5s;
