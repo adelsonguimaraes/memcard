@@ -3,13 +3,15 @@ class card {
         this.EL = document.querySelector('div.box ul');
         this.LISTA = [];
         this.IDDECK = null;
-        this.getHash();
+        this.get();
     }
 
-    async getHash() {
+    async get() {
         // --- pegando hash da url
         const params = new URLSearchParams(window.location.search);
         const iddeck = parseInt(params.get('iddeck'));
+
+        this.EL.innerHTML = '';
         
         // --- se o hash não for um numero válido
         if (isNaN(iddeck)) return window.location.replace('./');
@@ -20,6 +22,7 @@ class card {
         this.LISTA = await INDEXEDDB.getBy('card', 'iddeck', iddeck);
         // se for undefined
         if (this.LISTA.length<=0) return false;
+        
         
         this.mount();
     }
@@ -78,13 +81,22 @@ class card {
                         <a href="./cadcard.html?iddeck=${e.iddeck}&id=${e.id}">EDITAR</a>
                     </li>
                     <li>
-                        <a class="link-red" onclick="deletar(${e.id})">DELETAR</a>
+                        <a class="link-red" onclick="CARD.deletar(${e.id})">DELETAR</a>
                     </li>
                 `;
 
                 MODAL.show(string);
             }
         });
+    }
+
+    async deletar (id) {
+        const c = confirm("Deseja remover o card?");
+
+        if (c) {
+            const r = await INDEXEDDB.remove ('card', id);
+            window.location.reload();
+        }
     }
 
     novo () {

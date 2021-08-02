@@ -5,36 +5,38 @@ class game {
         this.CARD = document.querySelector('div.card');
         this.INDEX = 0;
         this.FLIP = false;
-        this.DATA = [
-            {
-                id: 1,
-                pergunta: 'Para que serve a função splice no JavaScript ?',
-                resposta: 'Adiciona ou remove elementos do array.'
-            },
-            {
-                id: 2,
-                pergunta: 'Para que serve a função split no JavaScript ?',
-                resposta: 'Converter string em array separando por um determinado caracter.'
-            },
-            {
-                id: 3,
-                pergunta: 'No PHP para que serve a função array_column?',
-                resposta: 'Extrair de um Array uma coluna expecífica para um novo array.'
-            }
-        ];
-        this.mountCard();
+        this.IDDECK = 0;
+        this.LISTA = [];
+        this.get();
         this.flipCard();
         this.clickOK();
         this.clickNO();
     }
 
-    mountCard () {
-        this.CARD.classList.remove('card-flip');
-        this.CARD.querySelector('div.front').innerHTML = this.DATA[this.INDEX].pergunta;
+    async get() {
+        // --- pegando hash da url
+        const params = new URLSearchParams(window.location.search);
+        const iddeck = parseInt(params.get('iddeck'));
         
-        setTimeout(() => {
-            this.CARD.querySelector('div.back').innerHTML = this.DATA[this.INDEX].resposta;
-        }, 500);
+        // --- se o hash não for um numero válido
+        if (isNaN(iddeck)) return window.location.replace('./');
+
+        this.IDDECK = iddeck;
+        
+        // getando por id
+        this.LISTA = await INDEXEDDB.getBy('card', 'iddeck', this.IDDECK);
+        // se for undefined
+        if (this.LISTA.length<=0) return false;
+
+        this.mountCard();
+    }
+
+    mountCard () {
+        console.log(this.LISTA[this.INDEX]);
+
+        this.CARD.classList.remove('card-flip');
+        this.CARD.querySelector('div.front').innerText = this.LISTA[this.INDEX].frente;
+        this.CARD.querySelector('div.back').innerText = this.LISTA[this.INDEX].verso;
     }
 
     flipCard () {
@@ -47,7 +49,7 @@ class game {
     clickOK () {
         document.querySelector('button.btn-green').addEventListener('click', e => {
             if (!this.FLIP) return alert('Vire a carta antes!');
-            this.INDEX = (this.DATA[this.INDEX+1] === undefined) ? 0 : (this.INDEX+1);
+            this.INDEX = (this.LISTA[this.INDEX+1] === undefined) ? 0 : (this.INDEX+1);
             this.mountCard();
             this.FLIP = false;
         });
@@ -55,7 +57,8 @@ class game {
     clickNO () {
         document.querySelector('button.btn-red').addEventListener('click', e => {
             if (!this.FLIP) return alert('Vire a carta antes!');
-            this.INDEX = (this.DATA[this.INDEX+1] === undefined) ? 0 : (this.INDEX+1);
+
+            this.INDEX = (this.LISTA[this.INDEX+1] === undefined) ? 0 : (this.INDEX+1);
             this.mountCard();
             this.FLIP = false;
         });

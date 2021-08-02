@@ -209,3 +209,4 @@ li {
 .link-red {
     color: brown !important;
 }
+/* .force-redraw::before { content: "" } */

@@ -7,13 +7,13 @@ class app {
 
     async get () {
         this.LISTA = await INDEXEDDB.getAll('deck');
+        this.EL.innerHTML = '';
         this.mount();
     }
 
     async mount () {
         let string = '';
-        this.EL.innerHTML = '';
-
+        
         for (const e of this.LISTA) {
             
             // consultando os cards
@@ -96,8 +96,7 @@ class app {
 
             const r = await INDEXEDDB.remove ('deck', id);
 
-            this.get();
-            MODAL.close();
+            window.location.reload();
         }
     }
 }

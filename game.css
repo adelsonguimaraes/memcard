@@ -27,7 +27,6 @@
     /* text-align: justify; */
     font-size: 30px;
     font-weight: 600;
-    backface-visibility: hidden;
     padding: 20px;
     width: 100%;
     height: 100%;
@@ -41,6 +40,7 @@
     transform: rotateY(180deg);
     background-color: #ffb142;
     width: 100%;
+    backface-visibility: hidden;
 }
 .card .back-mask {
     width: 100%;
