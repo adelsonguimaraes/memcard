@@ -9,7 +9,6 @@ body {
     height: 100vh;
     scroll-behavior: smooth;
     transition: .5s;
-    overflow: hidden;
 }
 .show {
     display: block !important;
