@@ -37,7 +37,10 @@ class cadcard {
         // getando por id
         this.OBJ = await INDEXEDDB.get('card', this.OBJ.id);
         // se for undefined
-        if (this.OBJ===undefined) return false;
+        if (this.OBJ===undefined) {
+            sessionStorage.removeItem('idcard');
+            return this.reset();
+        }
 
         this.FRENTE.value = this.OBJ.frente;
         this.VERSO.value = this.OBJ.verso;

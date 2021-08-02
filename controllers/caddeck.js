@@ -24,7 +24,10 @@ class caddeck {
         // getando por id
         this.OBJ = await INDEXEDDB.get('deck', id);
         // se for undefined
-        if (this.OBJ===undefined) return false;
+        if (this.OBJ===undefined) {
+            sessionStorage.removeItem('iddeck');
+            return this.reset();
+        }
         
         this.INPUT.value = this.OBJ.name;
     }
@@ -32,6 +35,8 @@ class caddeck {
     async cadastrar () {
         if (this.INPUT.value==='') return alert("Prencha um nome para salvar o deck!");
         
+        console.log(this.OBJ);
+
         if (this.OBJ.id===null) {
 
             const dt = new Date();

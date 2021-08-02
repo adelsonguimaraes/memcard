@@ -14,6 +14,12 @@ class app {
     async mount () {
         let string = '';
         
+        if (this.LISTA.length<=0) {
+            document.querySelector('div.empty').classList.add('empty-show');
+        }else{
+            document.querySelector('div.empty').classList.remove('empty-show');
+        }
+
         for (const e of this.LISTA) {
             
             // consultando os cards

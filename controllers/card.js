@@ -18,10 +18,21 @@ class card {
         this.IDDECK = iddeck;
 
         // getando por id
+        const deck = await INDEXEDDB.get('deck', iddeck);
+
+        // atualizando o titulo com o nome do deck
+        document.querySelector('div.box h3.title').innerHTML = `${deck.name}`;
+
+        // getando por id
         this.LISTA = await INDEXEDDB.getBy('card', ('iddeck'), (iddeck));
 
         // se for undefined
-        if (this.LISTA.length<=0) return false;
+        if (this.LISTA.length<=0) {
+            document.querySelector('div.empty').classList.add('empty-show');
+            return false;
+        }else{
+            document.querySelector('div.empty').classList.remove('empty-show');
+        }
         
         
         this.mount();
