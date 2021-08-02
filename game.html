@@ -6,16 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game</title>
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="./game.css">
+    <link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/game.css">
 
 </head>
 <body>
-    <div class="menu"></div>
+    <div class="return">
+        <a href="./">
+            <i class="fa fa-hand-o-left"></i>
+        </a>
+    </div>
 
     <div class="content">
         <div class="title"></div>
         <div class="card">
+            <div class="nivel"></div>
             <div class="front"></div>
             <div class="back"></div>
             <div class="btn-flip"></div>
@@ -26,8 +32,8 @@
         </div>
     </div>
 
-    <script src="./controllers/indexedb.js"></script>
-    <script src="./controllers/menu.js"></script>
+    <script src="./controllers/registerServiceWorker.js"></script>
+    <script src="./controllers/indexeddb.js"></script>
     <script src="./controllers/game.js"></script>
 
 </body>

@@ -16,7 +16,9 @@ class caddeck {
 
     async getHash() {
         // --- pegando hash da url
-        let id = window.location.hash.replace('#', '');
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get('id'));
+        
         // --- se o hash não for um numero válido
         if (isNaN(parseInt(id))) return false;
 

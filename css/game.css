@@ -23,6 +23,13 @@
     border-radius: 5px;
     cursor: pointer;
 }
+.card .nivel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 40px;
+}
 .card div {
     /* text-align: justify; */
     font-size: 30px;
@@ -78,7 +85,7 @@
     position: absolute;
     bottom: 5px;
     right: 5px;
-    background-image: url(./flip.png);
+    background-image: url(./../img/flip.png);
     background-position: center;
     background-size: cover;
 }

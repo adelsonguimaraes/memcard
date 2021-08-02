@@ -39,9 +39,37 @@ class game {
         this.mountCard();
     }
 
+    getNivel (e) {
+         // lógica nível
+         let nivel = '';
+         if (e.nivel === 1) {
+             nivel += `
+                 <i class="fa fa-star"></i>
+                 <i class="fa fa-star-o"></i>
+                 <i class="fa fa-star-o"></i>
+             `;
+         }else if (e.nivel === 2) {
+             nivel = `
+                 <i class="fa fa-star"></i>
+                 <i class="fa fa-star"></i>
+                 <i class="fa fa-star-o"></i>
+             `;
+         }else{
+             nivel = `
+                 <i class="fa fa-star"></i>
+                 <i class="fa fa-star"></i>
+                 <i class="fa fa-star"></i>
+             `;
+         }
+         return nivel;
+    }
+
     mountCard () {
         this.CARD.classList.remove('card-flip');
         this.CARD.querySelector('div.front').innerText = this.LISTA[this.INDEX].frente;
+
+        // motando o nivel do card
+        this.CARD.querySelector('div.nivel').innerHTML = this.getNivel(this.LISTA[this.INDEX]);
 
         // um pequeno atraso no preenchimento da resposta do card enquanto é girado
         // ao clicar em acerto ou erro
@@ -99,19 +127,27 @@ class game {
             this.FLIP = false;
         });
     }
-    clickNO () {
-        document.querySelector('button.btn-red').addEventListener('click', e => {
+    async clickNO () {
+        document.querySelector('button.btn-red').addEventListener('click', async e => {
             if (!this.FLIP) return alert('Vire a carta antes!');
 
             this.audioCancel();
 
-            // se o nível do card foir maior que 1
-            // contamos como erro
-            if (this.DECK.nivel>1) this.ERROR++;
-
             // baixando a carta de nível
             const card = this.LISTA[this.INDEX];
-            if (card.nivel>1) card.nivel--;
+
+            // se o card tiver nível acima do 1
+            if (card.nivel>1) {
+                // baixa o level
+                card.nivel--;
+                // removendo da lista
+                this.LISTA.splice(this.INDEX, 1);
+                // contamos como erro
+                this.ERROR++;
+            }
+
+            // salvando no banco
+            const request = await INDEXEDDB.update('card', card);
 
             // se acabar os cards
             if (this.LISTA.length<=0) return this.finish();

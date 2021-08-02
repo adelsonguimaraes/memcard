@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="manifest" href="./manifest.json">
+
     <title>MEMCARD</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="menu"></div>
-
     <div class="box">
         <h3>Meus Decks</h3>
         <ul></ul>
@@ -20,9 +21,9 @@
         </div>
     </div>
 
-    <script src="./controllers/menu.js"></script>
+    <script src="./controllers/registerServiceWorker.js"></script>
     <script src="./controllers/modal.js"></script>
-    <script src="./controllers/indexedb.js"></script>
+    <script src="./controllers/indexeddb.js"></script>
     <script src="./controllers/app.js"></script>
 </body>
 </html>
