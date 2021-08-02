@@ -9,6 +9,7 @@ body {
     height: 100vh;
     scroll-behavior: smooth;
     transition: .5s;
+    background-color: #474787;
 }
 .show {
     display: block !important;
